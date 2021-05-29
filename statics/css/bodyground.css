@@ -1,0 +1,11 @@
+
+body {
+    margin: 0 auto;
+    background-image: url(https://api.vvhan.com/api/bing?type=sj);
+    background-repeat: no-repeat; /*不设置为平铺*/
+    background-attachment: fixed;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+}

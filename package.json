@@ -1,0 +1,20 @@
+{
+    "name": "demo",
+    "description": "小张的Demo",
+    "authors": "小张",
+    "version": "1.0.0",
+    "main": "app.js",
+    "license": "MIT",
+    "dependencies": {
+        "koa": "latest",
+        "koa-router": "latest",
+        "koa-bodyparser": "latest",
+        "nunjucks": "latest",
+        "chokidar": "latest",
+        "koa-static": "latest",
+        "sequelize": "latest",
+        "pg": "latest",
+        "pg-hstore": "latest",
+        "koa-session": "latest"
+    }
+}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>登入-微说说</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="robots" content="all,follow">
+	<link href="https://cdn.bootcss.com/twitter-bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
+	<link rel="Shortcut Icon" href="ico/favicon.ico" type="image/x-icon" />
+</head>
+
+<body>
+	<form id="loginForm">
+		<div class="page login-page">
+			<div class="container d-flex align-items-center">
+				<div class="form-holder has-shadow">
+					<div class="row">
+						<!-- Logo & Information Panel-->
+						<div class="col-lg-6">
+							<div class="info d-flex align-items-center">
+								<div class="content">
+									<div class="logo">
+										<h1>欢迎登录</h1>
+									</div>
+									<p>微说说</p>
+								</div>
+							</div>
+						</div>
+						<!-- Form Panel    -->
+						<div class="col-lg-6 bg-white">
+							<div class="form d-flex align-items-center">
+								<div class="content">
+									<div class="form-group">
+										<input id="username" type="text" name="username" placeholder="用户名"
+											class="input-material">
+									</div>
+									<div class="form-group">
+										<input id="password" type="password" name="password" placeholder="密码"
+											class="input-material">
+									</div>
+									<button id="login" type="button" class="btn btn-primary"
+										onclick="jumpIndex()">登录</button>
+									<div style="margin-top: -40px;">
+										<div class="custom-control custom-checkbox " style="float: right;">
+											<input type="checkbox" class="custom-control-input" id="exampleCheck1">
+											<label class="custom-control-label"
+												for="exampleCheck1">记住我&nbsp;&nbsp;</label>
+										</div>
+									</div>
+
+									<br />
+									<small>没有账号?</small><a href="register" class="signup">&nbsp;注册</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	<!-- JavaScript files-->
+	<script src="https://cdn.bootcss.com/twitter-bootstrap/4.2.1/js/bootstrap.min.js"></script>
+	<script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+	<!--表单验证-->
+	<!-- Main File-->
+	<script>
+		// 点击注册时 执行的方法（获取数据，进行初步验证，验证通过则通过ajax向后台提交数据；否则提示验证不通过的信息）
+		function jumpIndex() {
+			let username = $('#username').val();
+			let password = $('#password').val();
+			if (username.length > 0 && password.length > 0) {
+				//ajax请求
+				$.ajax({
+					url: "/loginDone",
+					type: "POST",
+					data: $('#loginForm').serialize(),
+					dataType: "json",
+					success: function (res) {
+						console.log(res);
+						if (res.code === 200) {
+							window.location.href = '/';
+						} else {
+							alert(res.msg);
+						}
+					},
+					error: function (msg) {
+						alert('网络或者服务器有问题');
+					}
+				})
+			} else {// 验证不通过，提示相关信息，并且阻止提交
+				alert(res.msg);
+				return false;
+			}
+		}
+
+	</script>
+</body>
+
+</html>

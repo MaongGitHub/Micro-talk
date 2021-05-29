@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>主页-微说说</title>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/bodyground.css">
+    <link rel="Shortcut Icon" href="/ico/favicon.ico" type="image/x-icon" />
+    <style>
+        /* 卡片透明样式 */
+        .card {
+            margin-top: 1rem;
+            background-color: rgba(0, 0, 0, 0.200);
+        }
+
+        .list-group-item {
+            background-color: rgba(0, 0, 0, 0.300);
+        }
+
+        /* 卡片透明样式结束 */
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- 功能区 -->
+        <div class="row">
+            <div class="col-sm"></div>
+            <div class="col-sm">
+                <div class="card border-danger" style="width: 50rem;">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-sm-4 d-flex justify-content-start">
+                                <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal"
+                                    data-target="#saysomething">说点什么吧</button>
+                            </div>
+                            <div class="col-sm-4 d-flex justify-content-center">
+                                <p class="fonts">当前的小可爱：{{username}}</p>
+                            </div>
+                            <div class="col-sm-4 d-flex justify-content-end"><button type="button"
+                                    class="btn btn-outline-warning btn-sm" onclick="logout()">永别</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm"></div>
+        </div>
+        <!-- 功能区结束 -->
+
+        <!-- 每日一签区 -->
+        <div class="row">
+            <div class="col-sm">
+            </div>
+            <div class="col-sm">
+                <div class="card border-success rounded" style="width: 50rem;">
+                    <h5 class="fonts card-header">每天学一点 老婆会不同</h5>
+                    <div class="card-body">
+                        <h5 class="card-title" style="color: #FFC312; font-size: 20px;">土味情话</h5>
+                        <p class="love fonts" onclick="allfunctions()" >
+                            <b></b>
+                        </p>
+                        <button type="button" id="updatalove" class="btn btn-outline-primary" onclick="allfunctions()">学废了 换一句</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm">
+            </div>
+        </div>
+        <!-- 每日一签区结束 -->
+
+        <!-- 更新内容区 -->
+        <div class="row">
+            <div class="col-sm">
+            </div>
+            <div class="col-sm" id="saysayMsg">
+                {% for msg in msgs %}
+                <div class="card border-primary" style="width: 50rem;">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <div class="fonts">{{msg.msgUserName}}：{{msg.content}}</div><b class="text-right"
+                                    style="font-size: 10px;color: red;">发表时间：{{msg.createdAt}}</b>
+                            </div>
+                            <div class="col-sm-2"><button type="button" class="btn btn-outline-danger btn-sm"
+                                    data-toggle="modal" data-target="#comment"
+                                    onclick="msgCommit('{{msg.id}}')">点评一下</button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush" id="{{msg.id}}">
+                            {% for cmot in msg.comments %}
+                            <li class="list-group-item">
+                                <blockquote class="blockquote mb-0">
+                                    <p class="fonts">
+                                        {{cmot.content}}</p>
+                                    <b class="text-right"
+                                        style="font-size: 10px;color: red;">发表时间：{{cmot.createdAt}}</b>
+                                    <footer class="blockquote-footer">
+                                        <cite title="Source Title"
+                                            style="color: #FFC312; font-size: 20px;">{{cmot.comUserName}}&nbsp;&nbsp;对</cite>
+                                        <cite title="Source Title"
+                                            style="color: #FFC312; font-size: 20px;">{{msg.msgUserName}}&nbsp;&nbsp;说</cite>
+                                    </footer>
+                                </blockquote>
+                            </li>
+                            {% endfor %}
+                        </ul>
+
+                    </div>
+                </div>
+
+                {% endfor %}
+
+            </div>
+            <div class="col-sm">
+            </div>
+
+        </div>
+        <!-- 更新内容区结束 -->
+    </div>
+
+    <!-- 发表说说模态框  -->
+    <div class="modal fade" id="saysomething" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="fonts modal-title" id="exampleModalLabel">我要说啥来着？？？</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control" aria-describedby="passwordHelpInline" name="msgSay"
+                                id="msgSay" style="color: #4FFE80; font-size: 20px;">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-warning" data-dismiss="modal">算了。。。</button>
+                    <button type="button" class="btn btn-outline-success" data-dismiss="modal"
+                        onclick="say();">Biu~~~</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 发表模态框结束 -->
+
+    <!-- 指点一下模态框 -->
+    <div class="modal fade" id="comment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="fonts modal-title" id="exampleModalLabel">你下棋必被人指指点点</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control" aria-describedby="passwordHelpInline"
+                                id="commentText" style="color: #4FFE80; font-size: 20px;">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-success" data-dismiss="modal">不敢了。。。</button>
+                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal"
+                        onclick="saveComment()">怕啥？？？</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 指点一下模态框结束 -->
+    <script src="https://api.vvhan.com/api/yinghua"></script>
+    <script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    <script src="request.js"></script>
+    <script src="replaceTextColor.js"></script>
+
+    <!-- 退出账号和发表功能 -->
+    <script>
+        //当页面加载完成后替换情话文字和总体颜色
+        allfunctions();
+        
+        let currentMsgId = '';
+        function logout() {
+            request('/logout', 'POST', '', '', res => {
+                if (res.code === 200) {
+                    window.location.href = "/login";
+                }
+            }, err => {
+                console.log('网络或者服务器有问题');
+            });
+        }
+
+        function say() {
+            let data = {
+                msgSay: $('#msgSay').val()
+            }
+            request('/say', 'POST', data, '', res => {
+                if (res.code === 200) {
+                    let data = JSON.parse(res.data);
+                    console.log(data);
+                    let html = `
+                        <div class="card border-primary " style="width: 50rem;">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-sm-10"><div class="fonts" style="color: #4FFE80; font-size: 20px;">
+                                        {{username}}:${data.content}</div>
+                                    <b class="text-right" style="font-size: 10px;color: red;">发表时间：${data.createdAt}</b></div>
+                                    <div class="col-sm-2"><button type="button" class="btn btn-outline-danger btn-sm"
+                                            data-toggle="modal" data-target="#comment"
+                                            onclick="msgCommit(${data.id})">点评一下</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush" id="${data.id}">
+                                   
+                                </ul>
+
+                            </div>
+                        </div>
+                        `;
+
+                    $("#saysayMsg").prepend(html);
+                }
+            }, err => {
+                console.log('网络或者服务器有问题');
+            });
+        }
+
+        function msgCommit(msgId) {
+            currentMsgId = msgId;
+        }
+
+        function saveComment() {
+
+            let data = {
+                msgId: currentMsgId,
+                content: $('#commentText').val()
+            }
+            request('/comment', 'POST', data, '', res => {
+                if (res.code === 200) {
+                    let data = res.data;
+                    console.log(data);
+                    let html = `
+                            <li class="list-group-item">
+                                <blockquote class="blockquote mb-0">
+                                    <p class="fonts" style="color: #4FFE80; font-size: 20px;">${data.content}</p>
+                                    <b class="text-right" style="font-size: 10px;color: red;">发表时间：${data.createdAt}</b>
+                                    <footer class="blockquote-footer">
+                                        <cite title="Source Title" style="color: #FFC312; font-size: 20px;">${data.fromUserName}</cite>&nbsp;&nbsp;对
+                                        <cite title="Source Title" style="color: #FFC312; font-size: 20px;">${data.toUserName}</cite>&nbsp;&nbsp;说
+                                    </footer>
+                                </blockquote>
+                            </li>
+                        `;
+                    $("#" + currentMsgId).append(html);
+                }
+            }, err => {
+                console.log('网络或者服务器有问题');
+            });
+        }
+    </script>
+    <!-- 退出账号和发表功能结束 -->
+</body>
+
+</html>
